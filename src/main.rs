@@ -2,13 +2,17 @@ use crate::util::ISolution;
 use std::collections::HashMap;
 
 mod gift_shop;
+mod lobby;
 mod secret_entrance;
+mod printing_dept;
 mod util;
 
 fn get_all_solutions() -> HashMap<String, Box<dyn ISolution>> {
     let mut map: HashMap<String, Box<dyn ISolution>> = HashMap::new();
     add_fn("25.1", secret_entrance::SecretEntrance, &mut map);
     add_fn("25.2", gift_shop::GiftShop, &mut map);
+    add_fn("25.3", lobby::Lobby, &mut map);
+    add_fn("25.4", printing_dept::PrintingDepartment, &mut map);
     map
 }
 
@@ -19,7 +23,8 @@ fn main() {
     }
 
     let arg1 = args[1].as_str();
-    let ids = expand_ids(arg1);
+    let all_solutions = get_all_solutions();
+    let ids = expand_ids(arg1, all_solutions.keys().map(|k| k.as_str()).collect());
     if ids.len() == 0 {
         exit();
     }
@@ -37,6 +42,7 @@ fn main() {
         exit();
     }
 
+    // TODO: Sort, Table widths, Progress
     println!("{:-<24}", "");
     println!("{:^24}", "Solutions");
     println!("{:-<24}", "");
@@ -57,12 +63,16 @@ where
     map.insert(id.to_string(), Box::new(s));
 }
 
-fn expand_ids(arg1: &str) -> Vec<String> {
-    let Some(_) = arg1.split_once(".") else {
-        return vec![format!("{}.1", arg1), format!("{}.2", arg1)];
+fn expand_ids(arg1: &str, all_ids: Vec<&str>) -> Vec<String> {
+    if let Some(_) = arg1.split_once(".") {
+        return vec![arg1.to_string()];
     };
 
-    vec![arg1.to_string()]
+    return all_ids
+        .iter()
+        .filter(|i| i.starts_with(arg1))
+        .map(|i| i.to_string())
+        .collect();
 }
 
 fn exit() -> ! {

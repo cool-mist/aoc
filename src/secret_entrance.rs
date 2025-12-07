@@ -38,11 +38,10 @@ impl ISolution for SecretEntrance {
                     crosses_zero += 1;
                 }
             }
-
-            println!(
-                "{:>4} {} {:>4} | {:>3}, {:>5}",
-                prev_dial, rot, dial, zeroes, crosses_zero
-            );
+            // println!(
+            //     "{:>4} {} {:>4} | {:>3}, {:>5}",
+            //     prev_dial, rot, dial, zeroes, crosses_zero
+            // );
         }
 
         assert_eq!(995, zeroes);

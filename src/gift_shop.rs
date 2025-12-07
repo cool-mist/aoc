@@ -33,11 +33,10 @@ impl ISolution for GiftShop {
                         }
 
                         invalid_2 += i;
-
-                        println!(
-                            "{} {} x {} | {}, {}",
-                            num_str, part_size, part_count, invalid_1, invalid_2
-                        );
+                        // println!(
+                        //     "{} {} x {} | {}, {}",
+                        //     num_str, part_size, part_count, invalid_1, invalid_2
+                        // );
                     }
                 }
             }
